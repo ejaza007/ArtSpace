@@ -1,21 +1,28 @@
 package com.example.artspace
 
+import android.icu.lang.UCharacter.VerticalOrientation
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.artspace.ui.theme.ArtSpaceTheme
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,57 +41,47 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-class Artwork(val name: String, val artist: String, val image: Int)
+
 
 @Composable
 fun ArtSpaceLayout() {
-    val artworkList = listOf(
-        Artwork("Artwork 1", "Artist 1", R.drawable.artwork1),
-        Artwork("Artwork 2", "Artist 2", R.drawable.artwork2),
-        Artwork("Artwork 3", "Artist 3", R.drawable.artwork3)
+
+    ArtDisplay(imageResource = R.drawable.artwork1, textResource = stringResource(id = R.string.test_paint) , titleResource = stringResource(
+        id = R.string.app_name
+    ))
+
+
+}
+
+
+
+@Composable
+fun ArtDisplay(imageResource: Int, textResource: String, titleResource: String) {
+
+    Column(
+        verticalArrangement = Arrangement.Center
     )
+    {
 
-    var currentIndex = 0
 
-    Column {
-        ArtDisplay(artworkList[currentIndex])
-        ArtTextField(artworkList[currentIndex])
-        moveButton(artworkList.size, currentIndex) {
-            currentIndex += it
-            if (currentIndex < 0) {
-                currentIndex = artworkList.size - 1
-            } else if (currentIndex >= artworkList.size) {
-                currentIndex = 0
-            }
-        }
-    }
-}
+        Image(painter = painterResource(id = imageResource), contentDescription = null)
+        Text(
+            text = titleResource
 
-@Composable
-fun ArtDisplay(artwork: Artwork) {
-    val painter = painterResource(id = artwork.image)
-    val contentDescription = null
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = CenterHorizontally) {
-        androidx.compose.foundation.Image(
-            painter = painter,
-            contentDescription = contentDescription,
-            modifier = Modifier.fillMaxSize()
         )
+        Text(text = textResource)
+
+
     }
 }
 
-@Composable
-fun ArtTextField(artwork: Artwork) {
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = CenterHorizontally) {
-        androidx.compose.material3.Text(text = artwork.name)
-        androidx.compose.material3.Text(text = artwork.artist)
-    }
-}
 
-@Composable
-fun moveButton(maxSize: Int, currentIndex: Int, onMove: (Int) -> Unit) {
 
-}
+
+
+
+
+
 
 
 @Preview(showBackground = true)

@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">ArtSpace</string>
-
+    <string name="test_paint"> Painting 1</string>
 </resources>
